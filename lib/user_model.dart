@@ -1,14 +1,19 @@
-import 'dart:convert';
-class CurrecncyModel {
-  final String basecode;
-  final Map<String,double> conversionRates;
+class CurrencyModel {
+  final String baseCode;
+  final Map<String, double> conversionRates;
 
-  CurrecncyModel({
-    required this.basecode,
+  CurrencyModel({
+    required this.baseCode,
     required this.conversionRates,
-
   });
-  factory CurrecncyModel.fromJson(Map < String , dynamic json){
-    return CurrecncyModel(basecode: json['base_code'], conversionRates:Map<String,double>.from(json['conversion_rates']) );
+
+  factory CurrencyModel.fromJson(Map<String, dynamic> json) {
+    return CurrencyModel(
+      baseCode: json['base_code'] ?? 'USD',
+      conversionRates: (json["data"] as Map<String, dynamic>).map((key, value) {
+        return MapEntry(
+            key, (value is int) ? value.toDouble() : value.toDouble());
+      }),
+    );
   }
 }
