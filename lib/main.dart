@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(ProviderScope(child: App()));
+  runApp(const ProviderScope(child: App()));
 }
 
 class App extends StatelessWidget {
@@ -21,22 +21,24 @@ class App extends StatelessWidget {
 class CurrencyConverterScreen extends ConsumerWidget {
   final TextEditingController _amountController = TextEditingController();
 
+  CurrencyConverterScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(currencyConverterProvider).isLoading;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Currency Converter')),
+      appBar: AppBar(title: const Text('Currency Converter')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _amountController,
-              decoration: InputDecoration(labelText: 'Amount (USD)'),
+              decoration: const InputDecoration(labelText: 'Amount (USD)'),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ElevatedButton(
               onPressed: () {
                 final amount = double.tryParse(_amountController.text);
@@ -46,11 +48,11 @@ class CurrencyConverterScreen extends ConsumerWidget {
                       .convert(amount, 'USD', 'INR');
                 }
               },
-              child: Text('Convert to INR'),
+              child: const Text('Convert to INR'),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             if (isLoading)
-              CircularProgressIndicator()
+              const CircularProgressIndicator()
             else
               Consumer(builder: (context, watch, child) {
                 final convertedAmount = ref.watch(currencyConverterProvider);
@@ -58,7 +60,7 @@ class CurrencyConverterScreen extends ConsumerWidget {
                 return convertedAmount.when(
                   data: (amount) => Text(
                       'Converted Amount: ${amount.toStringAsFixed(2)} INR'),
-                  loading: () => SizedBox.shrink(),
+                  loading: () => const SizedBox.shrink(),
                   error: (error, stackTrace) => Text('Error: $error'),
                 );
               }),
