@@ -28,14 +28,28 @@ class CurrencyConverterScreen extends ConsumerWidget {
     final isLoading = ref.watch(currencyConverterProvider).isLoading;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Currency Converter')),
-      body: Padding(
+      appBar: AppBar(title: const Text('Currency Converter'),
+      backgroundColor: Color(0xFF0000FF),
+      titleTextStyle: TextStyle(color: Colors.white,
+      fontSize: 24,),
+      ),
+      backgroundColor: Color(0xFFADD8E6),
+      body: 
+      Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            Image.network('https://static.vecteezy.com/system/resources/previews/002/151/430/large_2x/global-currency-exchange-icon-transfer-money-stock-market-abstract-background-vector.jpg',
+            height: 300,),
+            SizedBox(height: 20,),
+            
             TextField(
               controller: _amountController,
-              decoration: const InputDecoration(labelText: 'Amount (USD)'),
+              decoration: const InputDecoration(labelText: 'Amount (USD)',
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue,width: 2.0),
+              )),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 15),
